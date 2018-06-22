@@ -7,6 +7,6 @@ registerScreens();
 Navigation.startSingleScreenApp({
   screen: {
     screen: 'shopping-app.AuthScreen',
-    title: 'Login/Signup'
+    title: 'Login'
   }
 });
