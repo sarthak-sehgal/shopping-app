@@ -1,20 +1,13 @@
 import React, {Component} from 'react';
 import {View, Text, Button, StyleSheet, TextInput} from 'react-native';
 
-import startMain from '../StartMain/StartMain';
+import {connect} from 'react-redux';
+import {login} from '../../store/actions/auth';
 
 class AuthScreen extends Component {
     state = {
-        username: '',
+        email: '',
         password: ''
-    }
-
-    loginHandler = () => {
-        if(this.state.username === "test" && this.state.password === "test") {
-            startMain();
-        } else {
-            alert("Username or password incorrect! Try again.");
-        }
     }
 
     signupHandler = () => {
@@ -25,14 +18,19 @@ class AuthScreen extends Component {
     }
     
     render () {
+        const authData = {
+            email: this.state.email,
+            password: this.state.password
+        }
+
         return (
             <View style={styles.authContainer}>
                 <Text style={styles.heading}>Login to shop!</Text>
                 <TextInput
-                    onChangeText={(username) => this.setState({username: username})}
-                    value={this.state.username}
+                    onChangeText={(email) => this.setState({email: email})}
+                    value={this.state.email}
                     style={styles.authTextInput}
-                    placeholder="Username"
+                    placeholder="E-mail"
                     autoCapitalize="none"
                 />
                 <TextInput
@@ -45,7 +43,7 @@ class AuthScreen extends Component {
                 />
                 <Button
                     title="Login" 
-                    onPress={this.loginHandler}/>
+                    onPress={() => this.props.onLogin(authData)}/>
                 <View style={styles.signupContainer}>
                     <Text style={styles.signupText}>Don't have an account?</Text>
                     <Button
@@ -86,4 +84,10 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AuthScreen;
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogin: (authData) => dispatch(login(authData))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(AuthScreen);

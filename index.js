@@ -2,17 +2,22 @@ import { AppRegistry } from 'react-native';
 import App from './App';
 
 // all the redux stuff
-import {createStore, combineReducers, applyMiddleware} from 'redux';
-import thunk from 'redux-thunk';
-import {Provider} from 'react-redux';
+import configureStore from './src/store/configureStore';
+import { Provider } from 'react-redux';
 
-import authReducer from './src/store/reducers/auth';
+// firebase setup
+// import * as firebase from 'firebase';
+// var config = {
+//     apiKey: "AIzaSyBfJb3j_EzNwrJPGVtCj77QiC_D-k6y53w",
+//     authDomain: "native-shopping-app.firebaseapp.com",
+//     databaseURL: "https://native-shopping-app.firebaseio.com",
+//     projectId: "native-shopping-app",
+//     storageBucket: "native-shopping-app.appspot.com",
+//     messagingSenderId: "910187357930"
+// };
+// firebase.initializeApp(config);
 
-const rootReducer = combineReducers({
-    auth: authReducer
-});
-
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = configureStore();
 
 const ShoppingApp = () => (
     <Provider store={store}>
