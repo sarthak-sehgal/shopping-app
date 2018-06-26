@@ -80,17 +80,20 @@ export const authSignUp = (authData) => {
                 //     })
                 // })
                 console.log(parsedRes);
-                dispatch(authStoreToken(parsedRes.idToken));
+                dispatch(authStoreToken(parsedRes.idToken, parsedRes.expiresIn));
                 startMain();
             }
         });
     };
 };
 
-export const authStoreToken = token => {
+export const authStoreToken = (token, expiry) => {
     return dispatch => {
         dispatch(authSetToken(token));
+        const now = new Date();
+        expiryDate = now.getTime() + expiry*1000;
         AsyncStorage.setItem("shopping-auth-token", token);
+        AsyncStorage.setItem("shopping-auth-expiry", expiryDate.toString());
     }
 };
 
@@ -106,15 +109,34 @@ export const authGetToken = () => {
         const promise = new Promise((resolve, reject) => {
             const token = getState().auth.token;
             if(!token) {
+                let fetchedToken;
                 AsyncStorage.getItem("shopping-auth-token")
                 .catch(err => reject())
                 .then(tokenFromStorage => {
-                    dispatch(authSetToken(tokenFromStorage));
-                    resolve(tokenFromStorage);
+                    if(!tokenFromStorage) {
+                        reject();
+                        return;
+                    }
+                    fetchedToken = tokenFromStorage;
+                    return AsyncStorage.getItem("shopping-auth-expiry");
                 })
+                .then(expiry => {
+                    const parsedExpiry = new Date(parseInt(expiry));
+                    const now = new Date();
+                    if(parsedExpiry > now) {
+                        dispatch(authSetToken(fetchedToken));
+                        resolve(fetchedToken);
+                    } else {
+                        reject();
+                    }
+                })
+                .catch(err => reject())
             } else {
                 resolve(token);
             }
+        });
+        promise.catch(err => {
+            dispatch(authClearStorage());
         });
         return promise;
     }
@@ -123,7 +145,14 @@ export const authGetToken = () => {
 export const autoSignIn = () => {
     return dispatch => {
         dispatch(authGetToken())
-        .catch(err => console.log("Failed to fetch token!"))
-        .then(token => startMain());
+        .then(token => startMain())
+        .catch(err => console.log("Failed to fetch token!"));
+    }
+}
+
+export const authClearStorage = () => {
+    return dispatch => {
+        AsyncStorage.removeItem("shopping-auth-token");
+        AsyncStorage.removeItem("shopping-auth-expiry");
     }
 }
