@@ -3,5 +3,6 @@ export {
     signUp,
     authSetToken,
     authGetToken,
-    autoSignIn
+    autoSignIn,
+    authLogout
 } from './auth';

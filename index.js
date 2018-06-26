@@ -1,5 +1,6 @@
 import { AppRegistry } from 'react-native';
 import App from './App';
+App();
 
 // all the redux stuff
 import configureStore from './src/store/configureStore';

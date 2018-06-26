@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes';
 import startMain from '../../screens/StartMain/StartMain';
 import { AsyncStorage } from 'react-native';
+import App from '../../../App';
 
 export const login = (authData) => {
     return dispatch => {
@@ -156,7 +157,7 @@ export const authGetToken = () => {
                 })
                 .then(res => res.json())
                 .then(parsedRes => {
-                    if(parsedRes.id_token) {
+                    if (parsedRes.id_token) {
                         console.log("Refresh token worked!");
                         dispatch(authStoreToken(parsedRes.id_token, parsedRes.expires_in, parsedRes.refresh_token));
                         return parsedRes.id_token;
@@ -165,8 +166,8 @@ export const authGetToken = () => {
                     }
                 })
                 .then(token => {
-                    if(!token) {
-                        throw(new Error())
+                    if (!token) {
+                        throw (new Error())
                     } else {
                         return token;
                     }
@@ -187,5 +188,22 @@ export const authClearStorage = () => {
     return dispatch => {
         AsyncStorage.removeItem("shopping-auth-token");
         AsyncStorage.removeItem("shopping-auth-expiry");
+        return AsyncStorage.removeItem("shopping-auth-refreshToken");
+    }
+}
+
+export const authLogout = () => {
+    return dispatch => {
+        dispatch(authClearStorage())
+        .then(() => {
+            App();
+        });
+        dispatch(authRemoveToken());
+    }
+};
+
+export const authRemoveToken = () => {
+    return {
+        type: actionTypes.AUTH_REMOVE_TOKEN
     }
 }

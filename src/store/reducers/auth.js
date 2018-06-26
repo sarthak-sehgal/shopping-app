@@ -12,6 +12,12 @@ const reducer = ( state = initialState, action ) => {
                 token: action.token
             }
             break;
+        case actionTypes.AUTH_REMOVE_TOKEN:
+            return {
+                ...state,
+                token: null
+            }
+            break;
     }
     return state;
 };

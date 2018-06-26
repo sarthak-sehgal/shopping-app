@@ -4,7 +4,7 @@ import {registerScreens} from './src/screens/index';
 
 registerScreens();
 
-Navigation.startSingleScreenApp({
+export default () => Navigation.startSingleScreenApp({
   screen: {
     screen: 'shopping-app.AuthScreen',
     title: 'Login'
