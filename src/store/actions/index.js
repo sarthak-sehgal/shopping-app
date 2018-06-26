@@ -1,4 +1,7 @@
 export {
     login,
-    signUp
+    signUp,
+    authSetToken,
+    authGetToken,
+    autoSignIn
 } from './auth';

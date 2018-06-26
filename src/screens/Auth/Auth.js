@@ -2,12 +2,17 @@ import React, {Component} from 'react';
 import {View, Text, Button, StyleSheet, TextInput} from 'react-native';
 
 import {connect} from 'react-redux';
-import {login} from '../../store/actions/auth';
+import {login, autoSignIn} from '../../store/actions/index';
 
 class AuthScreen extends Component {
     state = {
         email: '',
         password: ''
+    }
+
+    componentDidMount () {
+        this.props.onAutoSignIn();
+        console.log();
     }
 
     signupHandler = () => {
@@ -86,7 +91,8 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = dispatch => {
     return {
-        onLogin: (authData) => dispatch(login(authData))
+        onLogin: (authData) => dispatch(login(authData)),
+        onAutoSignIn: () => dispatch(autoSignIn())
     }
 }
 

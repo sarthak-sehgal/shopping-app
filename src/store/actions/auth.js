@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import startMain from '../../screens/StartMain/StartMain';
+import {AsyncStorage} from 'react-native';
 
 export const login = (authData) => {
     return dispatch => {
@@ -42,6 +43,7 @@ export const authLogin = (authData) => {
                 //     })
                 // })
                 console.log(parsedRes);
+                dispatch(authStoreToken(parsedRes.idToken));
                 startMain();
             }
         });
@@ -78,8 +80,50 @@ export const authSignUp = (authData) => {
                 //     })
                 // })
                 console.log(parsedRes);
+                dispatch(authStoreToken(parsedRes.idToken));
                 startMain();
             }
         });
     };
 };
+
+export const authStoreToken = token => {
+    return dispatch => {
+        dispatch(authSetToken(token));
+        AsyncStorage.setItem("shopping-auth-token", token);
+    }
+};
+
+export const authSetToken = token => {
+    return {
+        type: actionTypes.AUTH_SET_TOKEN,
+        token: token
+    }
+};
+
+export const authGetToken = () => {
+    return (dispatch, getState) => {
+        const promise = new Promise((resolve, reject) => {
+            const token = getState().auth.token;
+            if(!token) {
+                AsyncStorage.getItem("shopping-auth-token")
+                .catch(err => reject())
+                .then(tokenFromStorage => {
+                    dispatch(authSetToken(tokenFromStorage));
+                    resolve(tokenFromStorage);
+                })
+            } else {
+                resolve(token);
+            }
+        });
+        return promise;
+    }
+};
+
+export const autoSignIn = () => {
+    return dispatch => {
+        dispatch(authGetToken())
+        .catch(err => console.log("Failed to fetch token!"))
+        .then(token => startMain());
+    }
+}
