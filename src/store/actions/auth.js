@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 import startMain from '../../screens/StartMain/StartMain';
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from 'react-native';
 
 export const login = (authData) => {
     return dispatch => {
@@ -20,33 +20,37 @@ export const authLogin = (authData) => {
             method: "POST",
             body: JSON.stringify({
                 email: authData.email,
-                password: authData.password
+                password: authData.password,
+                returnSecureToken: true
             }),
             headers: {
                 'Content-Type': 'application/json'
             }
         })
-        .catch(error => {
-            console.log(err);
-            alert("Authentication failed! Please try again.");
-        })
-        .then(res => res.json())
-        .then(parsedRes => {
-            if(parsedRes.error) {
+            .catch(error => {
+                console.log(err);
                 alert("Authentication failed! Please try again.");
-                console.log(parsedRes);
-            } else {
-                // fetch("https://native-shopping-app.firebaseio.com/users.json", {
-                //     method: "POST",
-                //     body: JSON.stringify({
+            })
+            .then(res => res.json())
+            .then(parsedRes => {
+                if (parsedRes.error) {
+                    alert("Authentication failed! Please try again.");
+                    console.log(parsedRes);
+                } else {
+                    // fetch("https://native-shopping-app.firebaseio.com/users.json", {
+                    //     method: "POST",
+                    //     body: JSON.stringify({
 
-                //     })
-                // })
-                console.log(parsedRes);
-                dispatch(authStoreToken(parsedRes.idToken));
-                startMain();
-            }
-        });
+                    //     })
+                    // })
+                    console.log(parsedRes);
+                    dispatch(authStoreToken(
+                        parsedRes.idToken,
+                        parsedRes.expiresIn,
+                        parsedRes.refreshToken));
+                    startMain();
+                }
+            });
     };
 };
 
@@ -63,37 +67,41 @@ export const authSignUp = (authData) => {
                 'Content-Type': 'application/json'
             }
         })
-        .catch(error => {
-            console.log(err);
-            alert("Authentication failed! Please try again.");
-        })
-        .then(res => res.json())
-        .then(parsedRes => {
-            if(parsedRes.error) {
+            .catch(error => {
+                console.log(err);
                 alert("Authentication failed! Please try again.");
-                console.log(parsedRes);
-            } else {
-                // fetch("https://native-shopping-app.firebaseio.com/users.json", {
-                //     method: "POST",
-                //     body: JSON.stringify({
+            })
+            .then(res => res.json())
+            .then(parsedRes => {
+                if (parsedRes.error) {
+                    alert("Authentication failed! Please try again.");
+                    console.log(parsedRes);
+                } else {
+                    // fetch("https://native-shopping-app.firebaseio.com/users.json", {
+                    //     method: "POST",
+                    //     body: JSON.stringify({
 
-                //     })
-                // })
-                console.log(parsedRes);
-                dispatch(authStoreToken(parsedRes.idToken, parsedRes.expiresIn));
-                startMain();
-            }
-        });
+                    //     })
+                    // })
+                    console.log(parsedRes);
+                    dispatch(authStoreToken(
+                        parsedRes.idToken,
+                        parsedRes.expiresIn,
+                        parsedRes.refreshToken));
+                    startMain();
+                }
+            });
     };
 };
 
-export const authStoreToken = (token, expiry) => {
+export const authStoreToken = (token, expiry, refreshToken) => {
     return dispatch => {
         dispatch(authSetToken(token));
         const now = new Date();
-        expiryDate = now.getTime() + expiry*1000;
+        expiryDate = now.getTime() + expiry * 1000;
         AsyncStorage.setItem("shopping-auth-token", token);
         AsyncStorage.setItem("shopping-auth-expiry", expiryDate.toString());
+        AsyncStorage.setItem("shopping-auth-refreshToken", refreshToken);
     }
 };
 
@@ -108,45 +116,70 @@ export const authGetToken = () => {
     return (dispatch, getState) => {
         const promise = new Promise((resolve, reject) => {
             const token = getState().auth.token;
-            if(!token) {
+            if (!token) {
                 let fetchedToken;
                 AsyncStorage.getItem("shopping-auth-token")
-                .catch(err => reject())
-                .then(tokenFromStorage => {
-                    if(!tokenFromStorage) {
-                        reject();
-                        return;
-                    }
-                    fetchedToken = tokenFromStorage;
-                    return AsyncStorage.getItem("shopping-auth-expiry");
-                })
-                .then(expiry => {
-                    const parsedExpiry = new Date(parseInt(expiry));
-                    const now = new Date();
-                    if(parsedExpiry > now) {
-                        dispatch(authSetToken(fetchedToken));
-                        resolve(fetchedToken);
-                    } else {
-                        reject();
-                    }
-                })
-                .catch(err => reject())
+                    .catch(err => reject())
+                    .then(tokenFromStorage => {
+                        if (!tokenFromStorage) {
+                            reject();
+                            return;
+                        }
+                        fetchedToken = tokenFromStorage;
+                        return AsyncStorage.getItem("shopping-auth-expiry");
+                    })
+                    .then(expiry => {
+                        const parsedExpiry = new Date(parseInt(expiry));
+                        const now = new Date();
+                        if (parsedExpiry > now) {
+                            dispatch(authSetToken(fetchedToken));
+                            resolve(fetchedToken);
+                        } else {
+                            reject();
+                        }
+                    })
+                    .catch(err => reject())
             } else {
                 resolve(token);
             }
         });
-        promise.catch(err => {
-            dispatch(authClearStorage());
+        return promise.catch(err => {
+            return AsyncStorage.getItem("shopping-auth-refreshToken")
+                .then(refreshToken => {
+                    return fetch("https://securetoken.googleapis.com/v1/token?key=AIzaSyBfJb3j_EzNwrJPGVtCj77QiC_D-k6y53w", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        },
+                        body: "grant_type=refresh_token&refresh_token=" + refreshToken
+                    })
+                })
+                .then(res => res.json())
+                .then(parsedRes => {
+                    if(parsedRes.id_token) {
+                        console.log("Refresh token worked!");
+                        dispatch(authStoreToken(parsedRes.id_token, parsedRes.expires_in, parsedRes.refresh_token));
+                        return parsedRes.id_token;
+                    } else {
+                        dispatch(authClearStorage());
+                    }
+                })
+                .then(token => {
+                    if(!token) {
+                        throw(new Error())
+                    } else {
+                        return token;
+                    }
+                });
         });
-        return promise;
     }
 };
 
 export const autoSignIn = () => {
     return dispatch => {
         dispatch(authGetToken())
-        .then(token => startMain())
-        .catch(err => console.log("Failed to fetch token!"));
+            .then(token => startMain())
+            .catch(err => console.log("Failed to fetch token!"));
     }
 }
 
