@@ -38,13 +38,6 @@ export const authLogin = (authData) => {
                     alert("Authentication failed! Please try again.");
                     console.log(parsedRes);
                 } else {
-                    // fetch("https://native-shopping-app.firebaseio.com/users.json", {
-                    //     method: "POST",
-                    //     body: JSON.stringify({
-
-                    //     })
-                    // })
-                    console.log(parsedRes);
                     dispatch(authStoreToken(
                         parsedRes.idToken,
                         parsedRes.expiresIn,
@@ -78,18 +71,31 @@ export const authSignUp = (authData) => {
                     alert("Authentication failed! Please try again.");
                     console.log(parsedRes);
                 } else {
-                    // fetch("https://native-shopping-app.firebaseio.com/users.json", {
-                    //     method: "POST",
-                    //     body: JSON.stringify({
-
-                    //     })
-                    // })
-                    console.log(parsedRes);
-                    dispatch(authStoreToken(
-                        parsedRes.idToken,
-                        parsedRes.expiresIn,
-                        parsedRes.refreshToken));
-                    startMain();
+                    authStoreTokenDetails = {...parsedRes};
+                    fetch("https://native-shopping-app.firebaseio.com/users.json", {
+                        method: "POST",
+                        body: JSON.stringify({
+                            uid: parsedRes.localId,
+                            email: authData.email,
+                            address: authData.address,
+                            phone: authData.phone
+                        })
+                    })
+                        .then(res => res.json())
+                        .then(parsedRes => {
+                            if (parsedRes.error) {
+                                alert("Authentication failed! Please try again.")
+                            } else {
+                                dispatch(authStoreToken(
+                                    authStoreTokenDetails.idToken,
+                                    authStoreTokenDetails.expiresIn,
+                                    authStoreTokenDetails.refreshToken));
+                                startMain();
+                            }
+                        })
+                        .catch(err => {
+                            alert("Authentication failed! Please try again.")
+                        });
                 }
             });
     };
@@ -195,9 +201,9 @@ export const authClearStorage = () => {
 export const authLogout = () => {
     return dispatch => {
         dispatch(authClearStorage())
-        .then(() => {
-            App();
-        });
+            .then(() => {
+                App();
+            });
         dispatch(authRemoveToken());
     }
 };
