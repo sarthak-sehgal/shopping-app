@@ -2,6 +2,7 @@ import * as actionTypes from './actionTypes';
 import startMain from '../../screens/StartMain/StartMain';
 import { AsyncStorage } from 'react-native';
 import App from '../../../App';
+import { uiStartLoading, uiStopLoading } from './index';
 
 export const login = (authData) => {
     return dispatch => {
@@ -50,6 +51,7 @@ export const authLogin = (authData) => {
 
 export const authSignUp = (authData) => {
     return dispatch => {
+        dispatch(uiStartLoading());
         fetch("https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyBfJb3j_EzNwrJPGVtCj77QiC_D-k6y53w", {
             method: "POST",
             body: JSON.stringify({
@@ -64,14 +66,16 @@ export const authSignUp = (authData) => {
             .catch(error => {
                 console.log(err);
                 alert("Authentication failed! Please try again.");
+                dispatch(uiStopLoading());
             })
             .then(res => res.json())
             .then(parsedRes => {
                 if (parsedRes.error) {
                     alert("Authentication failed! Please try again.");
                     console.log(parsedRes);
+                    dispatch(uiStopLoading());
                 } else {
-                    authStoreTokenDetails = {...parsedRes};
+                    authStoreTokenDetails = { ...parsedRes };
                     fetch("https://native-shopping-app.firebaseio.com/users.json", {
                         method: "POST",
                         body: JSON.stringify({
@@ -84,17 +88,21 @@ export const authSignUp = (authData) => {
                         .then(res => res.json())
                         .then(parsedRes => {
                             if (parsedRes.error) {
-                                alert("Authentication failed! Please try again.")
+                                alert("Authentication failed! Please try again.");
+                                dispatch(uiStopLoading());
                             } else {
                                 dispatch(authStoreToken(
                                     authStoreTokenDetails.idToken,
                                     authStoreTokenDetails.expiresIn,
                                     authStoreTokenDetails.refreshToken));
+                                dispatch(uiStopLoading());
                                 startMain();
                             }
                         })
                         .catch(err => {
-                            alert("Authentication failed! Please try again.")
+                            alert("Authentication failed! Please try again.");
+                            dispatch(uiStopLoading());
+
                         });
                 }
             });
