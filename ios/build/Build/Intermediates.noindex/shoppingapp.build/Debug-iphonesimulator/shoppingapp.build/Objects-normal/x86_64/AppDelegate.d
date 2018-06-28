@@ -1,5 +1,18 @@
 dependencies: \
   /Users/sarthak/Personal/shopping-app/ios/shoppingapp/AppDelegate.m \
+  /Users/sarthak/Personal/shopping-app/ios/Pods/Firebase/CoreOnly/Sources/module.modulemap \
+  /Users/sarthak/Personal/shopping-app/ios/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Modules/module.modulemap \
+  /Users/sarthak/Personal/shopping-app/ios/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Headers/FIRAnalyticsSwiftNameSupport.h \
+  /Users/sarthak/Personal/shopping-app/ios/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Headers/FIRUserPropertyNames.h \
+  /Users/sarthak/Personal/shopping-app/ios/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Headers/FIRParameterNames.h \
+  /Users/sarthak/Personal/shopping-app/ios/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Headers/FIREventNames.h \
+  /Users/sarthak/Personal/shopping-app/ios/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Headers/FIRAnalytics.h \
+  /Users/sarthak/Personal/shopping-app/ios/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Headers/FIRAnalytics+AppDelegate.h \
+  /Users/sarthak/Personal/shopping-app/ios/Pods/FirebaseAnalytics/Frameworks/FirebaseAnalytics.framework/Headers/FirebaseAnalytics.h \
+  /Users/sarthak/Personal/shopping-app/ios/Pods/FirebaseInstanceID/Frameworks/FirebaseInstanceID.framework/Modules/module.modulemap \
+  /Users/sarthak/Personal/shopping-app/ios/Pods/FirebaseInstanceID/Frameworks/FirebaseInstanceID.framework/Headers/FIRInstanceID.h \
+  /Users/sarthak/Personal/shopping-app/ios/Pods/FirebaseInstanceID/Frameworks/FirebaseInstanceID.framework/Headers/FirebaseInstanceID.h \
+  /Users/sarthak/Personal/shopping-app/ios/Pods/Firebase/CoreOnly/Sources/Firebase.h \
   /Users/sarthak/Personal/shopping-app/ios/shoppingapp/AppDelegate.h \
   /Users/sarthak/Personal/shopping-app/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTBundleURLProvider.h \
   ../node_modules/react-native-navigation/ios/RCCManager.h \

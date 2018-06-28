@@ -49,9 +49,17 @@
 		<data>
 		qhk6hXDyQp/YYzEpKIxg0bW3tlk=
 		</data>
+		<key>GoogleService-Info.plist</key>
+		<data>
+		g0XZFtBnygFIRnpgL/VE7j/BYhE=
+		</data>
 		<key>Info.plist</key>
 		<data>
-		EDNAzDVM0M8LT+9iHp7lRKglXRo=
+		WM4sqDRmc+i03IjBMO0PLL+9hW4=
+		</data>
+		<key>Ionicons.ttf</key>
+		<data>
+		D3lWcE/mG0nEHqGiIFEkD3AKK0Q=
 		</data>
 		<key>PkgInfo</key>
 		<data>
@@ -63,7 +71,7 @@
 		</data>
 		<key>PlugIns/shoppingappTests.xctest.dSYM/Contents/Resources/DWARF/shoppingappTests</key>
 		<data>
-		drL+Zb5veLxqjaNF2PoEjzC+Xg4=
+		SX8wEP7ohxjw3nkT5S/Igf8+kpw=
 		</data>
 		<key>PlugIns/shoppingappTests.xctest/Info.plist</key>
 		<data>
@@ -75,7 +83,7 @@
 		</data>
 		<key>PlugIns/shoppingappTests.xctest/shoppingappTests</key>
 		<data>
-		bfGlxm7yKLbEvqIXrR2pVta+sLM=
+		61MHnzoqbvq/eF22iOQKAovhVsQ=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -192,6 +200,28 @@
 			L4ikvo5qrwsx21+syxZrwgRwrNbc3av4ZtEyZl/yF78=
 			</data>
 		</dict>
+		<key>GoogleService-Info.plist</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			g0XZFtBnygFIRnpgL/VE7j/BYhE=
+			</data>
+			<key>hash2</key>
+			<data>
+			pgMF2rFgIWxDCiXJvk9WZ2XEkg1hmzHL9wNZHa42uQw=
+			</data>
+		</dict>
+		<key>Ionicons.ttf</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			D3lWcE/mG0nEHqGiIFEkD3AKK0Q=
+			</data>
+			<key>hash2</key>
+			<data>
+			u0dnmwuuuEgbf1HGitM65aUmc2y1CxcXzGD/a2X5CKM=
+			</data>
+		</dict>
 		<key>PlugIns/shoppingappTests.xctest.dSYM/Contents/Info.plist</key>
 		<dict>
 			<key>hash</key>
@@ -207,11 +237,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			drL+Zb5veLxqjaNF2PoEjzC+Xg4=
+			SX8wEP7ohxjw3nkT5S/Igf8+kpw=
 			</data>
 			<key>hash2</key>
 			<data>
-			94jOa7X61HNiiHLcovDfKTuPpvKEkPxVy96eOceETNQ=
+			k5hUvKrBeTdmNj8Qvxx9ft+YuxvngqFnXNWTMYTO5f8=
 			</data>
 		</dict>
 		<key>PlugIns/shoppingappTests.xctest/Info.plist</key>
@@ -240,11 +270,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			bfGlxm7yKLbEvqIXrR2pVta+sLM=
+			61MHnzoqbvq/eF22iOQKAovhVsQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			6xwycjirlQmvLjoFRz55W9RGnzRubdj0GrpNWRtYwLM=
+			ZxCwbVg0DoAlJegzUEMAveYG/sPoR1yQi7SCDLLg2UM=
 			</data>
 		</dict>
 	</dict>
