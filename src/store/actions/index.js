@@ -4,7 +4,8 @@ export {
     authSetToken,
     authGetToken,
     autoSignIn,
-    authLogout
+    authLogout,
+    authGetUID
 } from './auth';
 
 export {
