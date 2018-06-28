@@ -18,6 +18,7 @@ export const signUp = (authData) => {
 
 export const authLogin = (authData) => {
     return dispatch => {
+        dispatch(uiStartLoading());
         fetch("https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyBfJb3j_EzNwrJPGVtCj77QiC_D-k6y53w", {
             method: "POST",
             body: JSON.stringify({
@@ -32,17 +33,20 @@ export const authLogin = (authData) => {
             .catch(error => {
                 console.log(err);
                 alert("Authentication failed! Please try again.");
+                dispatch(uiStopLoading());
             })
             .then(res => res.json())
             .then(parsedRes => {
                 if (parsedRes.error) {
                     alert("Authentication failed! Please try again.");
                     console.log(parsedRes);
+                    dispatch(uiStopLoading());
                 } else {
                     dispatch(authStoreToken(
                         parsedRes.idToken,
                         parsedRes.expiresIn,
                         parsedRes.refreshToken));
+                    dispatch(uiStopLoading());                    
                     startMain();
                 }
             });
