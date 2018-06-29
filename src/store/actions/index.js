@@ -12,3 +12,7 @@ export {
     uiStartLoading,
     uiStopLoading
 } from './ui';
+
+export {
+    addProduct
+} from './products';

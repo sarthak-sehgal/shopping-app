@@ -6,6 +6,7 @@ import TopProducts from './TopProducts/TopProducts';
 import AllProducts from './AllProducts/AllProducts';
 import Cart from './Cart/Cart';
 import SideDrawer from './SideDrawer/SideDrawer';
+import AddProduct from './AddProduct/AddProduct'
 
 //connect screens with redux
 import {Provider} from 'react-redux';
@@ -20,4 +21,5 @@ export function registerScreens() {
   Navigation.registerComponent('shopping-app.AllProducts', () => AllProducts, store, Provider);
   Navigation.registerComponent('shopping-app.Cart', () => Cart, store, Provider);
   Navigation.registerComponent('shopping-app.SideDrawer', () => SideDrawer, store, Provider);
+  Navigation.registerComponent('shopping-app.AddProduct', () => AddProduct, store, Provider);
 }
