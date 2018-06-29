@@ -4,5 +4,17 @@ export {
     authSetToken,
     authGetToken,
     autoSignIn,
-    authLogout
+    authLogout,
+    authGetUID
 } from './auth';
+
+export {
+    uiStartLoading,
+    uiStopLoading
+} from './ui';
+
+export {
+    addProduct,
+    getProducts,
+    searchProducts
+} from './products';

@@ -1,7 +1,8 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    token: null
+    token: null,
+    uid: null
 }
 
 const reducer = ( state = initialState, action ) => {
@@ -16,6 +17,18 @@ const reducer = ( state = initialState, action ) => {
             return {
                 ...state,
                 token: null
+            }
+            break;
+        case actionTypes.AUTH_SET_UID:
+            return {
+                ...state,
+                uid: action.uid
+            }
+            break;
+        case actionTypes.AUTH_REMOVE_UID:
+            return {
+                ...state,
+                uid: null
             }
             break;
     }

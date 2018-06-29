@@ -1,5 +1,6 @@
 dependencies: \
   /Users/sarthak/Personal/shopping-app/ios/shoppingappTests/shoppingappTests.m \
+  /Users/sarthak/Personal/shopping-app/ios/Pods/Firebase/CoreOnly/Sources/module.modulemap \
   /Users/sarthak/Personal/shopping-app/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTLog.h \
   /Users/sarthak/Personal/shopping-app/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAssert.h \
   /Users/sarthak/Personal/shopping-app/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTDefines.h \

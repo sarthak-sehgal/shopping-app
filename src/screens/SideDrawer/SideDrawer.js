@@ -1,15 +1,102 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
-import {connect} from 'react-redux';
-import {authLogout} from '../../store/actions/index';
+import { connect } from 'react-redux';
+import { authLogout } from '../../store/actions/index';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
+import { Navigation } from 'react-native-navigation';
+
 class SideDrawer extends Component {
+    onAddProduct = () => {
+        Promise.all([
+            Icon.getImageSource("ios-close", 40),
+        ]).then(sources => {
+            Navigation.showModal({
+                screen: 'shopping-app.AddProduct', // unique ID registered with Navigation.registerScreen
+                title: 'Add A Product', // navigation bar title of the pushed screen (optional)
+                navigatorButtons: {
+                    leftButtons: [
+                        {
+                            icon: sources[0],
+                            title: "Close",
+                            id: "closeModal"
+                        }
+                    ]
+                }
+            });
+        });
+    }
     render() {
         return (
             <View style={styles.container}>
+                <TouchableOpacity onPress={this.props.onLogout}>
+                    <View style={styles.drawerItem}>
+                        <Icon
+                            name="ios-apps"
+                            size={30}
+                            color="#aaa"
+                            style={styles.drawerItemIcon}
+                        />
+                        <Text>View Orders</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.onAddProduct}>
+                    <View style={styles.drawerItem}>
+                        <Icon
+                            name="ios-add-circle"
+                            size={30}
+                            color="#aaa"
+                            style={styles.drawerItemIcon}
+                        />
+                        <Text>Add A Product</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.props.onLogout}>
+                    <View style={styles.drawerItem}>
+                        <Icon
+                            name="ios-remove-circle"
+                            size={30}
+                            color="#aaa"
+                            style={styles.drawerItemIcon}
+                        />
+                        <Text>Remove A Product</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.props.onLogout}>
+                    <View style={styles.drawerItem}>
+                        <Icon
+                            name="ios-arrow-dropup-circle"
+                            size={30}
+                            color="#aaa"
+                            style={styles.drawerItemIcon}
+                        />
+                        <Text>Change Product Status</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.props.onLogout}>
+                    <View style={styles.drawerItem}>
+                        <Icon
+                            name="ios-star"
+                            size={30}
+                            color="#aaa"
+                            style={styles.drawerItemIcon}
+                        />
+                        <Text>Review Top Products</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.props.onLogout}>
+                    <View style={styles.drawerItem}>
+                        <Icon
+                            name="ios-photos"
+                            size={30}
+                            color="#aaa"
+                            style={styles.drawerItemIcon}
+                        />
+                        <Text>View My Orders</Text>
+                    </View>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={this.props.onLogout}>
                     <View style={styles.drawerItem}>
                         <Icon
@@ -35,7 +122,9 @@ const styles = StyleSheet.create({
     drawerItem: {
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: "#eee"
+        backgroundColor: "#eee",
+        borderBottomWidth: 1,
+        borderBottomColor: "#cecece"
     },
     drawerItemIcon: {
         margin: 10
