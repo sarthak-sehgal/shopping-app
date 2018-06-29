@@ -12,7 +12,6 @@ class AddProduct extends Component {
 
     state = {
         productName: '',
-        productTags: '',
         productDescription: '',
         productPrice: ''
     }
@@ -30,7 +29,6 @@ class AddProduct extends Component {
     render() {
         const productDetails = {
             name: this.state.productName,
-            tags: this.state.productTags,
             description: this.state.productDescription,
             price: this.state.productPrice
         }
@@ -43,14 +41,6 @@ class AddProduct extends Component {
                     value={this.state.productName}
                     style={styles.textInput}
                     placeholder="Product Name"
-                />
-                <TextInput
-                    onChangeText={(tags) => this.setState({ productTags: tags })}
-                    value={this.state.productTags}
-                    style={styles.textInput}
-                    placeholder="Tags"
-                    multiline={true}
-                    autoCapitalize="none"
                 />
                 <TextInput
                     onChangeText={(description) => this.setState({ productDescription: description })}

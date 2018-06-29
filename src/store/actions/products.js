@@ -10,7 +10,6 @@ export const addProduct = (productDetails) => {
                     method: "POST",
                     body: JSON.stringify({
                         name: productDetails.name,
-                        tags: productDetails.tags.split(" ").filter(item => item !== ""),
                         description: productDetails.description,
                         price: productDetails.price
                     }),
