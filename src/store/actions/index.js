@@ -14,5 +14,6 @@ export {
 } from './ui';
 
 export {
-    addProduct
+    addProduct,
+    getProducts
 } from './products';

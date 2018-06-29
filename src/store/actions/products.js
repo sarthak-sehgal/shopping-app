@@ -9,7 +9,6 @@ export const addProduct = (productDetails) => {
                 fetch("https://native-shopping-app.firebaseio.com/products.json?auth=" + token, {
                     method: "POST",
                     body: JSON.stringify({
-                        id: productDetails.name.replace(/ /g, ''),
                         name: productDetails.name,
                         tags: productDetails.tags.split(" ").filter(item => item !== ""),
                         description: productDetails.description,
@@ -42,4 +41,38 @@ export const addProduct = (productDetails) => {
                 alert("Failed to add product! Please try again.");
             })
     }
-}
+};
+
+export const setProducts = (products) => {
+    return {
+        type: actionTypes.SET_PRODUCTS,
+        products: products
+    }
+};
+
+export const getProducts = () => {
+    return dispatch => {
+        dispatch(uiStartLoading());
+        dispatch(authGetToken())
+            .then(token => {
+                fetch("https://native-shopping-app.firebaseio.com/products.json?auth=" + token)
+                    .catch(err => {
+                        console.log(err);
+                        dispatch(uiStopLoading());
+                        alert("Oops! Something went wrong. Failed to load products.");
+                    })
+                    .then(res => res.json())
+                    .then(parsedRes => {
+                        const products = [];
+                        for (let key in parsedRes) {
+                            products.push({
+                                ...parsedRes[key],
+                                id: key
+                            });
+                        };
+                        dispatch(setProducts(products));
+                        dispatch(uiStopLoading());
+                    })
+            })
+    }
+};

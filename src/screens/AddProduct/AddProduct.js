@@ -31,7 +31,8 @@ class AddProduct extends Component {
         const productDetails = {
             name: this.state.productName,
             tags: this.state.productTags,
-            description: this.state.productDescription
+            description: this.state.productDescription,
+            price: this.state.productPrice
         }
 
         let addProductForm = (
