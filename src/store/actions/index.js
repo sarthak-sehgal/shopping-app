@@ -15,5 +15,6 @@ export {
 
 export {
     addProduct,
-    getProducts
+    getProducts,
+    searchProducts
 } from './products';

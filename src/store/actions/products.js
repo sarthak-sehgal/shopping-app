@@ -76,3 +76,10 @@ export const getProducts = () => {
             })
     }
 };
+
+export const searchProducts = (query) => {
+    return {
+        type: actionTypes.SEARCH_PRODUCTS,
+        searchQuery: query
+    }
+};
