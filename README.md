@@ -2,14 +2,14 @@
 ---
 ## Mockups
 ### Sign Up
-![Sign Up](https://github.com/sarthak-sehgal/shopping-app/blob/gifs/Sign-Up.gif)
+<img src="https://github.com/sarthak-sehgal/shopping-app/blob/gifs/Sign-Up.gif" width="400px" />
 
 ### Add A Product
-![Add Product](https://github.com/sarthak-sehgal/shopping-app/blob/gifs/Add-Product.gif)
+<img src="https://github.com/sarthak-sehgal/shopping-app/blob/gifs/Add-Product.gif" width="400px" />
 
 ### Login
 Your session remains even after closing the app!
-![Login](https://github.com/sarthak-sehgal/shopping-app/blob/gifs/Login-and-sessions.gif)
+<img src="https://github.com/sarthak-sehgal/shopping-app/blob/gifs/Login-and-sessions.gif" width="400px" />
 ---
 ## Introduction
 This is a shopping application for iOS made using React Native, React Redux and Firebase.
