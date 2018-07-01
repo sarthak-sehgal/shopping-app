@@ -13,7 +13,6 @@ const reducer = (state = initialState, action) => {
                 products: action.products,
                 searchResults: action.products
             }
-            break;
         case actionTypes.SEARCH_PRODUCTS:
             let searchResults = [...state.products];
             searchResults = searchResults.filter(product => {
@@ -33,7 +32,15 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 searchResults: searchResults
             }
-            break;
+        case actionTypes.REMOVE_PRODUCT_IN_STORE:
+            let updatedProducts = [...state.searchResults];
+            updatedProducts = updatedProducts.filter(product => {
+                return product.key !== action.key;
+            });
+            return {
+                ...state,
+                searchResults: updatedProducts
+            }
     }
     return state;
 };

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, FlatList, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, FlatList, TextInput, Button } from 'react-native';
 import { connect } from 'react-redux';
-import { getProducts, searchProducts } from '../../store/actions/index';
+import { getProducts, searchProducts, deleteProduct } from '../../store/actions/index';
 
 class AllProducts extends Component {
     componentDidMount() {
@@ -19,10 +19,9 @@ class AllProducts extends Component {
 
     onNavigatorEvent = event => {
         if (event.type === "NavBarButtonPress") {
-            if (event.id === "sideDrawerToggle") {
-                this.props.navigator.toggleDrawer({
-                    side: "left",
-                    animated: true
+            if (event.id === "closeModal") {
+                this.props.navigator.dismissModal({
+                    animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
                 });
             }
         }
@@ -31,6 +30,10 @@ class AllProducts extends Component {
     searchHandler = (query) => {
         this.setState({ searchQuery: query });
         this.props.searchProducts(query);
+    }
+
+    removeHandler = (key) => {
+        this.props.deleteProduct(key);
     }
 
 
@@ -53,6 +56,10 @@ class AllProducts extends Component {
                                 <Text style={styles.productName}>{item.name}</Text>
                                 <Text style={styles.productPrice}>Price: {item.price}</Text>
                                 <Text style={styles.productDescription}>{item.description}</Text>
+                                <Button
+                                    title="Remove"
+                                    onPress={() => this.removeHandler(item.key)}
+                                />
                             </View>
                         }
                     />
@@ -136,7 +143,8 @@ mapStateToProps = state => {
 mapDispatchToProps = dispatch => {
     return {
         getProducts: () => dispatch(getProducts()),
-        searchProducts: (query) => dispatch(searchProducts(query))
+        searchProducts: (query) => dispatch(searchProducts(query)),
+        deleteProduct: (key) => dispatch(deleteProduct(key))
     }
 }
 

@@ -66,7 +66,7 @@ export const getProducts = () => {
                         for (let key in parsedRes) {
                             products.push({
                                 ...parsedRes[key],
-                                id: key
+                                key: key
                             });
                         };
                         dispatch(setProducts(products));
@@ -82,3 +82,33 @@ export const searchProducts = (query) => {
         searchQuery: query
     }
 };
+
+export const deleteProduct = (key) => {
+    return dispatch => {
+        dispatch(removeProductInStore(key));
+        dispatch(uiStartLoading());
+        dispatch(authGetToken())
+            .then(token => {
+                fetch("https://native-shopping-app.firebaseio.com/products/" + key + ".json?auth=" + token, {
+                    method: "DELETE"
+                })
+                    .catch(err => {
+                        dispatch(uiStopLoading());
+                        alert("Something went wrong, sorry :/");
+                        console.log(err);
+                    })
+                    .then(res => res.json())
+                    .then(parsedRes => {
+                        dispatch(uiStopLoading());
+                        alert("Product removed!");
+                    });
+            })
+    };
+};
+
+export const removeProductInStore = (key) => {
+    return {
+        type: actionTypes.REMOVE_PRODUCT_IN_STORE,
+        key: key
+    }
+}

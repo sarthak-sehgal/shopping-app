@@ -9,13 +9,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { Navigation } from 'react-native-navigation';
 
 class SideDrawer extends Component {
-    onAddProduct = () => {
+    onClickItem = (screenName, title) => {
         Promise.all([
             Icon.getImageSource("ios-close", 40),
         ]).then(sources => {
             Navigation.showModal({
-                screen: 'shopping-app.AddProduct', // unique ID registered with Navigation.registerScreen
-                title: 'Add A Product', // navigation bar title of the pushed screen (optional)
+                screen: 'shopping-app.'+screenName, // unique ID registered with Navigation.registerScreen
+                title: title, // navigation bar title of the pushed screen (optional)
                 navigatorButtons: {
                     leftButtons: [
                         {
@@ -42,7 +42,7 @@ class SideDrawer extends Component {
                         <Text>View Orders</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.onAddProduct}>
+                <TouchableOpacity onPress={() => this.onClickItem('AddProduct', 'Add A Product')}>
                     <View style={styles.drawerItem}>
                         <Icon
                             name="ios-add-circle"
@@ -53,7 +53,7 @@ class SideDrawer extends Component {
                         <Text>Add A Product</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.props.onLogout}>
+                <TouchableOpacity onPress={() => this.onClickItem('RemoveProduct', 'Remove A Product')}>
                     <View style={styles.drawerItem}>
                         <Icon
                             name="ios-remove-circle"

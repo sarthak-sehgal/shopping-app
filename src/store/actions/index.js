@@ -16,5 +16,6 @@ export {
 export {
     addProduct,
     getProducts,
-    searchProducts
+    searchProducts,
+    deleteProduct
 } from './products';
