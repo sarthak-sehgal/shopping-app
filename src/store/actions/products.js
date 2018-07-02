@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import { uiStartLoading, uiStopLoading, authGetToken } from './index';
+import AddProduct from '../../screens/AddProduct/AddProduct';
 
 export const addProduct = (productDetails) => {
     return dispatch => {
@@ -29,6 +30,7 @@ export const addProduct = (productDetails) => {
                             dispatch(uiStopLoading());
                             alert("Failed to add product! Please try again.");
                         } else {
+                            dispatch(addProductInStore(productDetails));
                             dispatch(uiStopLoading());
                             alert("Product added!");
                         }
@@ -41,6 +43,13 @@ export const addProduct = (productDetails) => {
             })
     }
 };
+
+export const addProductInStore = (productDetails) => {
+    return {
+        type: actionTypes.ADD_PRODUCT_IN_STORE,
+        details: productDetails
+    }
+}
 
 export const setProducts = (products) => {
     return {
